@@ -1,12 +1,29 @@
 import React, {Component} from 'react';
-
-import './App.css';
+import Card from './components/Card/Card';
+import CardDeck from './lib/CardDeck';
 
 class App extends Component {
-    render() {
-        return (
-            <div className="App">
+    state = {
+        cards: []
+    };
 
+    CardDeck = new CardDeck();
+
+
+
+
+    render() {
+        this.CardDeck.showCards();
+        return (
+            <div className="container">
+                {this.CardDeck.allCards.map((card, index) => {
+                    return (
+                        <Card rank={card.rank}
+                              suit={card.suit}
+                              key={index}
+                        />
+                    )
+                })}
             </div>
         );
     }
