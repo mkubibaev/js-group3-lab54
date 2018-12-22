@@ -9,32 +9,39 @@ const Card = props => {
         spades: '♠',
         clubs: '♣'
     };
-    let st = '';
+    let cardSuit = '';
     const cardClasses = ['Card'];
-    cardClasses.push('Card-rank-' + props.rank.toLowerCase());
+
+    if (props.rank) {
+		cardClasses.push('Card-rank-' + props.rank.toLowerCase());
+    }
 
     switch (props.suit) {
         case 'D':
-            st = suits.diams;
+            cardSuit = suits.diams;
             cardClasses.push('Card-diams');
             break;
         case 'H':
-            st = suits.hearts;
+            cardSuit = suits.hearts;
             cardClasses.push('Card-hearts');
             break;
         case 'S':
-            st = suits.spades;
+            cardSuit = suits.spades;
             cardClasses.push('Card-spades');
             break;
+        case 'C':
+			cardSuit = suits.clubs;
+			cardClasses.push('Card-clubs');
+			break;
         default:
-            st = suits.clubs;
-            cardClasses.push('Card-clubs');
+            cardSuit = '';
+            cardClasses.push('Card-back');
     }
 
     return (
         <div className={cardClasses.join(' ')}>
             <span className="Card-rank">{props.rank}</span>
-            <span className="Card-suit">{st}</span>
+            <span className="Card-suit">{cardSuit}</span>
         </div>
     );
 };

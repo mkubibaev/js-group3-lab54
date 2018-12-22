@@ -11,8 +11,19 @@ class CardDeck {
         }
     }
 
-    showCards() {
-        console.log(this.allCards);
+	getCard() {
+        const randomIndex = Math.floor(Math.random() * this.allCards.length) + 1;
+
+        return this.allCards.splice(randomIndex, 1);
+    }
+
+	getCards(howMany) {
+        const result = [];
+        for (let i = 0; i < howMany; i++) {
+            const card = this.getCard();
+            result.push(...card);
+        }
+        return result;
     }
 
 }

@@ -13,8 +13,8 @@ class App extends Component {
 
 
     render() {
-        this.CardDeck.showCards();
-        return (
+
+		return (
             <div className="container">
                 {this.CardDeck.allCards.map((card, index) => {
                     return (
