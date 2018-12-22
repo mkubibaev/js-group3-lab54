@@ -6,7 +6,13 @@ class CardDeck {
 
         for (let i = 0; i < this.ranks.length; i++) {
             for (let j = 0; j < this.suits.length; j++) {
-                this.allCards.push({rank: this.ranks[i], suit: this.suits[j]})
+                this.allCards.push(
+                    {
+                        id: this.ranks[i] + this.suits[j],
+                        rank: this.ranks[i],
+                        suit: this.suits[j]
+                    }
+                )
             }
         }
     }

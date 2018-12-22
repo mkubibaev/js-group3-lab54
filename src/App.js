@@ -5,18 +5,12 @@ import PokerHand from './lib/PokerHand';
 
 class App extends Component {
     state = {
-        cards: [
-			{rank: '4', suit: 'D'},
-			{rank: '9', suit: 'C'},
-			{rank: 'K', suit: 'D'},
-			{rank: '2', suit: 'H'},
-			{rank: 'J', suit: 'D'},
-        ],
+        cards: [],
     };
 
     startNewGame = () => {
         this.CardDeck = new CardDeck();
-        const cards = this.CardDeck.getCards(5);
+		const cards = this.CardDeck.getCards(5);
 
         this.setState({cards});
     };
@@ -31,11 +25,11 @@ class App extends Component {
 		return (
             <div className="container">
                 <button onClick={this.startNewGame}>Start new game</button>
-                {this.state.cards.map((card, index) => {
+                {this.state.cards.map(card => {
                     return (
-                        <Card rank={card.rank}
-                              suit={card.suit}
-                              key={index}
+                        <Card key={card.id}
+							  rank={card.rank}
+							  suit={card.suit}
                         />
                     )
                 })}
