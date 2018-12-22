@@ -4,49 +4,49 @@ class PokerHand {
 	}
 
 	getOutcome() {
-		let equalCards = 0;
-		// let result = '';
+		let ranksObj = {};
+		let suitsObj = {};
+		let pairs = {count: 0, ranks: []};
+		let result = '';
 
-		for (let i = 0; i < this.cards.length; i++) {
-			let currentCard = this.cards.splice(i, 1);
-
-			for (let j = 0; j < this.cards.length; j++) {
-				if (currentCard.rank === this.cards[j].rank) {
-					console.log(currentCard.rank);
-					equalCards +=2;
-				}
+		for (let card of this.cards) {
+			if (!ranksObj[card.rank]) {
+				ranksObj[card.rank] = 1;
+			} else {
+				ranksObj[card.rank] += 1;
 			}
 
-
+			if (!suitsObj[card.suit]) {
+				suitsObj[card.suit] = 1;
+			} else {
+				suitsObj[card.suit] += 1;
+			}
 		}
 
-		return equalCards;
+		for (let rank in ranksObj) {
+			if (ranksObj[rank] === 2) {
+				pairs.count++;
+				pairs.ranks.push(rank);
+			} else if (ranksObj[rank] === 3) {
+				result = `Three of a kind (${rank})`;
+			}
+		}
 
+		if (pairs.count === 1) {
+			result = `One pair (${pairs.ranks.join(', ')})`;
+		} else if (pairs.count === 2) {
+			result = `Two pairs (${pairs.ranks.join(', ')})`;
+		}
 
+		for (let suit in suitsObj) {
+			if (suitsObj[suit] === 5) {
+				pairs++;
+				result = 'Flush';
+			}
+		}
 
+		return result;
 
-
-		// const ranks = [];
-		// const suits = [];
-		//
-		// for (let i = 0; i < this.cards.length; i++) {
-		// 	ranks.push(this.cards[i].rank);
-		// 	suits.push(this.cards[i].suit);
-		// }
-		//
-		// ranks.sort();
-		// suits.sort();
-		//
-		// for (let j = 0; j < ranks.length - 1; j++) {
-		// 	if (ranks[j] === ranks[j + 1]) {
-		// 		result = 'One Pair';
-		//
-		// 		if (ranks[j + 2] === ranks[j + 3]) {
-		// 			result = 'Two Pair';
-		// 		}
-		// 	}
-		// }
-		// return result;
 	}
 }
 
