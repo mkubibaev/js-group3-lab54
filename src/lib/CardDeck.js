@@ -12,7 +12,7 @@ class CardDeck {
     }
 
 	getCard() {
-        const randomIndex = Math.floor(Math.random() * this.allCards.length) + 1;
+        const randomIndex = Math.floor(Math.random() * this.allCards.length);
 
         return this.allCards.splice(randomIndex, 1);
     }
@@ -23,9 +23,8 @@ class CardDeck {
             const card = this.getCard();
             result.push(...card);
         }
-        return result;
+		return result;
     }
-
 }
 
 export default CardDeck;

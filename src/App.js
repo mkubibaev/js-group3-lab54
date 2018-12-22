@@ -1,22 +1,37 @@
 import React, {Component} from 'react';
 import Card from './components/Card/Card';
-import CardDeck from './lib/CardDeck';
+//import CardDeck from './lib/CardDeck';
+import PokerHand from './lib/PokerHand';
 
 class App extends Component {
     state = {
-        cards: []
+        cards: [
+            {rank: 'K', suit: 'S'},
+            {rank: '10', suit: 'D'},
+			{rank: 'K', suit: 'C'},
+            {rank: '3', suit: 'D'},
+			{rank: 'J', suit: 'H'}
+        ],
     };
 
-    CardDeck = new CardDeck();
+    // startNewGame = () => {
+    //     this.CardDeck = new CardDeck();
+    //     const cards = this.CardDeck.getCards(5);
+    //
+    //     this.setState({cards});
+    // };
 
+    checkPokerHand() {
+		this.PokerHand = new PokerHand(this.state.cards);
+		return this.PokerHand.getOutcome();
 
-
+    }
 
     render() {
-
 		return (
             <div className="container">
-                {this.CardDeck.allCards.map((card, index) => {
+                {/*<button onClick={this.startNewGame}>Start new game</button>*/}
+                {this.state.cards.map((card, index) => {
                     return (
                         <Card rank={card.rank}
                               suit={card.suit}
@@ -24,6 +39,7 @@ class App extends Component {
                         />
                     )
                 })}
+                <span>{this.checkPokerHand()}</span>
             </div>
         );
     }
