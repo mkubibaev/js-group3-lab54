@@ -7,6 +7,7 @@ class PokerHand {
 		let ranksObj = {};
 		let suitsObj = {};
 		let pairs = {count: 0, ranks: []};
+		let three = {count: 0, ranks: ''};
 		let result = '';
 
 		for (let card of this.cards) {
@@ -24,16 +25,28 @@ class PokerHand {
 		}
 
 		for (let rank in ranksObj) {
+
 			if (ranksObj[rank] === 2) {
 				pairs.count++;
 				pairs.ranks.push(rank);
-			} else if (ranksObj[rank] === 3) {
-				result = `Three of a kind (${rank})`;
+			}
+
+			if (ranksObj[rank] === 3) {
+				three.count++;
+				three.ranks = rank;
+			}
+
+			if (ranksObj[rank] === 4) {
+				result = `Four of a kind (${rank})`;
 			}
 		}
 
 		if (pairs.count === 1) {
 			result = `One pair (${pairs.ranks.join(', ')})`;
+
+			if (three.count === 1) {
+				result = `Full House (${pairs.ranks.join(', ')}, ${three.ranks})`;
+			}
 		} else if (pairs.count === 2) {
 			result = `Two pairs (${pairs.ranks.join(', ')})`;
 		}

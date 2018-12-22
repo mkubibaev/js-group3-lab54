@@ -6,11 +6,11 @@ import PokerHand from './lib/PokerHand';
 class App extends Component {
     state = {
         cards: [
-            {rank: 'K', suit: 'S'},
-            {rank: 'Q', suit: 'S'},
+			{rank: '2', suit: 'C'},
+			{rank: '2', suit: 'D'},
 			{rank: '2', suit: 'S'},
-            {rank: '3', suit: 'S'},
-			{rank: 'J', suit: 'S'}
+			{rank: '2', suit: 'H'},
+			{rank: 'K', suit: 'D'},
         ],
     };
 
