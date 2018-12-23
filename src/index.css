@@ -6,14 +6,55 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #ecf0f5;
 }
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 .container {
     max-width: 1100px;
     margin: 0 auto;
+    padding: 30px 0;
 }
+
+.poker-hand {
+    display: block;
+    font-size: 24px;
+    font-weight: normal;
+    text-align: center;
+    padding: 0;
+    margin: 0 0 30px;
+    min-height: 28px;
+}
+.cards {
+    text-align: center;
+    min-height: 110px;
+    margin-bottom: 30px;
+}
+.actions {
+    text-align: center;
+}
+
+.actions button {
+    display: inline-block;
+    margin: 5px 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    padding: 10px;
+    line-height: 1.2;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bolder;
+    background-color: #26a69a;
+    font-size: 14px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+.actions button.deal-draw {
+    background-color: #E57373;
+}
+
+.actions button:active {
+    box-shadow: none;
+}
+

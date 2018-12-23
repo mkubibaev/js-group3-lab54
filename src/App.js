@@ -24,16 +24,24 @@ class App extends Component {
     render() {
 		return (
             <div className="container">
-                <button onClick={this.startNewGame}>Start new game</button>
-                {this.state.cards.map(card => {
-                    return (
-                        <Card key={card.id}
-							  rank={card.rank}
-							  suit={card.suit}
-                        />
-                    )
-                })}
-                <span>{this.checkPokerHand()}</span>
+				<h3 className="poker-hand">{this.checkPokerHand()}</h3>
+				<div className="cards">
+					{this.state.cards.map(card => (
+							<Card key={card.id}
+								  rank={card.rank}
+								  suit={card.suit}
+							/>
+						)
+					)}
+				</div>
+				<div className="actions">
+					<button >Bet One</button>
+					<button >Max Bet</button>
+					<button onClick={this.startNewGame} className="deal-draw">Deal Draw</button>
+				</div>
+
+
+
             </div>
         );
     }

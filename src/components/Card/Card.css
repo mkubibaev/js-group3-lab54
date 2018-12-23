@@ -3,8 +3,7 @@
     width: 3.3em;
     height: 4.6em;
     position: relative;
-    border: 1px solid #666;
-    border-radius: .3em;
+    border-radius: .15em;
     padding: .25em;
     margin: 0 .5em .5em 0;
     text-align: center;
@@ -12,7 +11,7 @@
     font-weight: normal;
     font-family: Arial, sans-serif;
     background-color: #fff;
-    box-shadow: .2em .2em .5em #333;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
     vertical-align: top;
 }
 
@@ -265,7 +264,8 @@
 .Card.Card-rank-q,
 .Card.Card-rank-k,
 .Card.Card-joker {
-    background: no-repeat -1em 0;
+    background-repeat: no-repeat;
+    background-position: -1em 0;
     /* @change: smaller cards: more negative distance from the left
        bigger cards: 0 or more positive distance from the left */
 
