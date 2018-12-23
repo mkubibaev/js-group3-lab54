@@ -37,7 +37,6 @@ const Card = props => {
             cardSuit = '';
             cardClasses.push('Card-back');
     }
-
     return (
         <div className={cardClasses.join(' ')}>
             <span className="Card-rank">{props.rank}</span>

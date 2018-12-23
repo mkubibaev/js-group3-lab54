@@ -9,7 +9,7 @@ body {
     background: #ecf0f5;
 }
 .container {
-    max-width: 1100px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 30px 0;
 }
@@ -26,7 +26,7 @@ body {
 .cards {
     text-align: center;
     min-height: 110px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .actions {
     text-align: center;
@@ -51,10 +51,58 @@ body {
 }
 
 .actions button.deal-draw {
-    background-color: #E57373;
+    background-color: #e57373;
+}
+
+.actions button:disabled {
+    opacity: 0.5;
+    cursor: default;
+    box-shadow: none;
 }
 
 .actions button:active {
     box-shadow: none;
 }
 
+.bet-table {
+    margin-bottom: 10px;
+}
+.bet-table ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: right;
+    border: 3px solid #455a64;
+    background: #607d8b;
+}
+.bet-table ul li{
+    display: flex;
+    justify-content: space-between;
+}
+.bet-table span {
+    display: inline-block;
+    flex-basis: 86px;
+    text-align: right;
+    border-right: 1px solid #455a64;
+    padding: 3px 5px;
+    color: #fff;
+}
+
+.bet-table span:first-child {
+    text-align: left;
+    flex-basis: 140px;
+}
+
+.bet-table span:last-child {
+    border-right: none;
+}
+
+.bet-table span.current {
+    background: #455a64;
+}
+
+.gameResult {
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: space-between;
+}

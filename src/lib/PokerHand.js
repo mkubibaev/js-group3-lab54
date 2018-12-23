@@ -74,6 +74,10 @@ class PokerHand {
 
 		const highCard = sortedRanksNumArr[sortedRanksNumArr.length - 1];
 
+		if (highCard) {
+			result = `High Card (${highCard})`;
+		}
+
 		if (highCard === 13) {
 			result = 'High Card (K)';
 		} else if (highCard === 12) {

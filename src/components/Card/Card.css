@@ -266,8 +266,8 @@
 .Card.Card-joker {
     background-repeat: no-repeat;
     background-position: -1em 0;
-    /* @change: smaller cards: more negative distance from the left
-       bigger cards: 0 or more positive distance from the left */
+    /* @change: smaller currentCards: more negative distance from the left
+       bigger currentCards: 0 or more positive distance from the left */
 
     /* for a centered full background image:
     background-position: .35em 0;
