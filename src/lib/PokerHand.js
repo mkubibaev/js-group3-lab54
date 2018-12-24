@@ -9,7 +9,7 @@ class PokerHand {
 		const pairs = {count: 0, ranks: []};
 		const three = {count: 0, ranks: ''};
 		let straightCheck = 0;
-		let result = '';
+		let result = {priority: '0', text: ''};
 
 		const ranksArr = [];
 		const ranksNumArr = [];
@@ -44,7 +44,8 @@ class PokerHand {
 			}
 
 			if (ranksObj[rank] === 4) {
-				result = `Four of a kind (${rank})`;
+				result.text = `Four of a kind (${rank})`;
+				result.priority = '3';
 			}
 		}
 
@@ -75,60 +76,68 @@ class PokerHand {
 		const highCard = sortedRanksNumArr[sortedRanksNumArr.length - 1];
 
 		if (highCard) {
-			result = `High Card (${highCard})`;
+			result.text = `High Card (${highCard})`;
 		}
 
 		if (highCard === 13) {
-			result = 'High Card (K)';
+			result.text = 'High Card (K)';
 		} else if (highCard === 12) {
-			result = 'High Card (Q)';
+			result.text = 'High Card (Q)';
 		} else if (highCard === 11) {
-			result = 'High Card (J)';
+			result.text = 'High Card (J)';
 		}
 
 		for (let i = 0; i < ranksArr.length; i++) {
 			if (ranksArr[i] === 'A') {
-				result = 'High Card (A)';
+				result.text = 'High Card (A)';
 			}
 		}
 
 		//One Pairs or Full House
 
 		if (pairs.count === 1) {
-			result = `One Pair (${pairs.ranks.join(', ')})`;
+			result.text = `One Pair (${pairs.ranks.join(', ')})`;
+			result.priority = '9';
 
 			if (three.count === 1) {
-				result = `Full House (${pairs.ranks.join(', ')}, ${three.ranks})`;
+				result.text = `Full House (${pairs.ranks.join(', ')}, ${three.ranks})`;
+				result.priority = '4';
 			}
 		}
 
 		//Two pairs
 
 		if (pairs.count === 2) {
-			result = `Two Pairs (${pairs.ranks.join(', ')})`;
+			result.text = `Two Pairs (${pairs.ranks.join(', ')})`;
+			result.priority = '8';
 		}
 
 		//Three
 
 		if (three.count === 1) {
-			result = `Three of a Kind (${three.ranks})`;
+			result.text = `Three of a Kind (${three.ranks})`;
+			result.priority  = '7';
 		}
 
 		//Flush
 
 		for (let suit in suitsObj) {
 			if (suitsObj[suit] === 5) {
-				result = 'Flush';
+				result.text = 'Flush';
+				result.priority = '5';
 			}
 		}
 
 		//Straight or Straight Flush
 
 		if (straightCheck === 4) {
-			if (result === 'Flush') {
-				result = 'Straight Flush';
+			if (result.text === 'Flush') {
+				result.text = 'Straight Flush';
+				result.priority = '2';
+
 			} else {
-				result = 'Straight';
+				result.text = 'Straight';
+				result.text = '6';
 			}
 		}
 
@@ -136,9 +145,11 @@ class PokerHand {
 
 		for (let i = 0; i < ranksArr.length; i++) {
 			if (ranksArr[i] === 'A' && straightCheck === 3) {
-				result = 'Straight';
+				result.text = 'Straight';
+				result.priority = '6';
 				if (sortedRanksNumArr[0] === 10) {
-					result = 'Royal Flush';
+					result.text = 'Royal Flush';
+					result.priority = '1';
 				}
 			}
 		}

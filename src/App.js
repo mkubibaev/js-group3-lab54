@@ -22,9 +22,9 @@ class App extends Component {
 			{id: '6', pokerHand: 'Straight', '1':4, '2':8, '3':12, '4':16, '5':20},
 			{id: '7', pokerHand: 'Three of a Kind', '1':3, '2':6, '3':9, '4':12, '5':15},
 			{id: '8', pokerHand: 'Two Pairs', '1':2, '2':4, '3':6, '4':8, '5':10},
-			{id: '9', pokerHand: 'One Pairs', '1':1, '2':2, '3':2, '4':4, '5':5}
+			{id: '9', pokerHand: 'One Pair', '1':1, '2':2, '3':3, '4':4, '5':5}
 		],
-		pokerHand: '',
+		pokerHand: {},
 		currentBet: 0,
 		currentWin: 0,
 		credits: 100,
@@ -91,6 +91,28 @@ class App extends Component {
         this.checkPokerHand();
     };
 
+    checkWin = () => {
+        let priority = this.state.pokerHand.priority;
+        let bets = this.state.bets;
+        let currentWin = this.state.currentWin;
+        let credits = this.state.credits;
+        let currentBet = this.state.currentBet;
+        let strCurrentBet = currentBet.toString();
+
+        currentWin = 0;
+
+        for (let i = 0; i < bets.length; i++) {
+            if (priority === bets[i].id) {
+                let win = bets[i];
+                currentWin = win[strCurrentBet];
+            }
+        }
+
+        credits += currentWin;
+
+        this.setState({credits, currentWin});
+    };
+
     handleOneBet = () => {
         let currentBet = this.state.currentBet;
         let credits = this.state.credits;
@@ -115,9 +137,12 @@ class App extends Component {
 				break;
 			case 'replace':
                 this.replaceCards();
-				this.setState({gameStage: 'deal'});
+                this.checkWin();
+				this.setState({gameStage: 'end'});
 				break;
-			case 'deal':
+			case 'end':
+
+
 
 				// this.setState({
 				// 	gameStage: 'start',
@@ -131,6 +156,8 @@ class App extends Component {
 	};
 
     render() {
+        console.log(this.state);
+
         let cards = null;
 
     	if (this.state.currentCards.length > 0) {
@@ -168,7 +195,7 @@ class App extends Component {
 					<span>Credits: {this.state.credits}</span>
 				</div>
 
-				<h3 className="poker-hand">{this.state.pokerHand}</h3>
+				<h3 className="poker-hand">{this.state.pokerHand.text}</h3>
 
 				{cards}
 
@@ -180,7 +207,7 @@ class App extends Component {
 							disabled={this.state.currentBet === 5 || this.state.gameStage !== "start" ? "disabled" : ""}
 					>Max Bet</button>
 					<button onClick={this.handleDealDraw}
-							disabled={this.state.currentBet > 0 ? "" : "disabled"}
+							disabled={this.state.currentBet > 0 && this.state.gameStage !== "end" ? "" : "disabled"}
 							className="deal-draw"
 					>Deal Draw</button>
 				</div>
