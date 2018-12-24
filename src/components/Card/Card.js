@@ -37,8 +37,16 @@ const Card = props => {
             cardSuit = '';
             cardClasses.push('Card-back');
     }
+
+    if (props.forReplace) {
+        cardClasses.push('Card-back');
+    }
+
+
     return (
-        <div className={cardClasses.join(' ')}>
+        <div className={cardClasses.join(' ')}
+             onClick={props.onReplase}
+        >
             <span className="Card-rank">{props.rank}</span>
             <span className="Card-suit">{cardSuit}</span>
         </div>

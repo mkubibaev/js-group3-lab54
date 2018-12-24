@@ -10,7 +10,8 @@ class CardDeck {
                     {
                         id: this.ranks[i] + this.suits[j],
                         rank: this.ranks[i],
-                        suit: this.suits[j]
+                        suit: this.suits[j],
+                        forReplace: false
                     }
                 )
             }

@@ -7,11 +7,11 @@ import BetTable from './components/BetTable/BetTable';
 class App extends Component {
     state = {
         currentCards: [
-			// {id: '10H', rank: '10', suit: 'H'},
-			// {id: '9D', rank: '9', suit: 'D'},
-			// {id: '5S', rank: '5', suit: 'S'},
-			// {id: '7H', rank: '7', suit: 'H'},
-			// {id: '8C', rank: '8', suit: 'C'}
+			// {id: '10H', rank: '10', suit: 'H', forReplace: false},
+			// {id: '9D', rank: '9', suit: 'D', forReplace: false},
+			// {id: '5S', rank: '5', suit: 'S', forReplace: false},
+			// {id: '7H', rank: '7', suit: 'H', forReplace: false},
+			// {id: '8C', rank: '8', suit: 'C', forReplace: false}
 		],
 		bets: [
 			{id: '1', pokerHand: 'Royal Flush', '1':250, '2':500, '3':750, '4':1000, '5':5000},
@@ -29,56 +29,101 @@ class App extends Component {
 		currentWin: 0,
 		credits: 100,
 		gameStage: 'start',
+        cardsForReplace: {count: 0, indexes: []},
     };
 
-    shuffleCards = () => {
+    async shuffleCards () {
         this.CardDeck = new CardDeck();
 		const currentCards = this.CardDeck.getCards(5);
 
-        this.setState({currentCards});
+        await this.setState({currentCards});
+        this.checkPokerHand();
     };
 
     checkPokerHand = () => {
 		this.PokerHand = new PokerHand(this.state.currentCards);
 		const pokerHand = this.PokerHand.getOutcome();
 
-		this.setState({pokerHand})
+        this.setState({pokerHand})
+    };
+
+    markForReplaceCard = id => {
+        if (this.state.gameStage === 'replace') {
+            let currentCards = this.state.currentCards;
+
+            for (let i = 0; i < currentCards.length; i++) {
+                if (currentCards[i].id === id) {
+                    currentCards[i].forReplace = !currentCards[i].forReplace;
+                }
+            }
+
+            this.setState({currentCards});
+            this.setForReplaceCardsCount();
+        }
+    };
+
+    setForReplaceCardsCount = () => {
+        let currentCards = this.state.currentCards;
+        let cardsForReplace = {
+            count: 0,
+            indexes: []
+        };
+
+        for (let i = 0; i < currentCards.length; i++) {
+            if(currentCards[i].forReplace) {
+                cardsForReplace.count++;
+                cardsForReplace.indexes.push(i);
+            }
+        }
+        this.setState({cardsForReplace});
+    };
+
+    replaceCards = () => {
+        let currentCards = this.state.currentCards;
+        let cardsForReplace = this.state.cardsForReplace;
+        const newCards = this.CardDeck.getCards(this.state.cardsForReplace.count); //берем новые карты с остатка в колоде
+
+        for (let i = 0; i < cardsForReplace.indexes.length; i++) {
+            currentCards.splice(cardsForReplace.indexes[i], 1, newCards.pop());
+        }
+
+        this.setState({currentCards});
+        this.checkPokerHand();
     };
 
     handleOneBet = () => {
-    	let currentBet = this.state.currentBet;
+        let currentBet = this.state.currentBet;
+        let credits = this.state.credits;
     	currentBet++;
+    	credits--;
 
-    	if (currentBet > 5) {
-    		currentBet = 5;
-		}
-
-    	this.setState({currentBet});
+    	this.setState({currentBet, credits});
 	};
 
     handleMaxBet = () => {
-		this.setState({currentBet: 5});
+        let credits = this.state.credits;
+        credits -= 5;
+
+		this.setState({currentBet: 5, credits});
 	};
 
     handleDealDraw = () => {
     	switch (this.state.gameStage) {
 			case 'start':
-				this.shuffleCards();
-				this.checkPokerHand();
+			    this.shuffleCards();
 				this.setState({gameStage: 'replace'});
 				break;
 			case 'replace':
-				// function to replace currentCards
-				this.checkPokerHand();
+                this.replaceCards();
 				this.setState({gameStage: 'deal'});
 				break;
 			case 'deal':
 
-				this.setState({
-					gameStage: 'start',
-					currentBet: 0,
-					pokerHand: ''
-				});
+				// this.setState({
+				// 	gameStage: 'start',
+				// 	currentBet: 0,
+				// 	pokerHand: ''
+				// });
 				break;
 			default:
 				console.log('qwe')
@@ -86,7 +131,7 @@ class App extends Component {
 	};
 
     render() {
-		let cards = null;
+        let cards = null;
 
     	if (this.state.currentCards.length > 0) {
 			cards = (
@@ -95,6 +140,8 @@ class App extends Component {
 							<Card key={card.id}
 								  rank={card.rank}
 								  suit={card.suit}
+                                  forReplace={card.forReplace}
+                                  onReplase={() => this.markForReplaceCard(card.id)}
 							/>
 						)
 					)}
@@ -126,13 +173,13 @@ class App extends Component {
 				{cards}
 
 				<div className="actions">
-					<button onClick={() => this.handleOneBet()}
-							disabled={this.state.gameStage !== 'start' ? "disabled" : ""}
+					<button onClick={this.handleOneBet}
+							disabled={this.state.currentBet === 5 || this.state.gameStage !== "start" ? "disabled" : ""}
 					>Bet One</button>
-					<button onClick={() => this.handleMaxBet()}
-							disabled={this.state.gameStage !== 'start' ? "disabled" : ""}
+					<button onClick={this.handleMaxBet}
+							disabled={this.state.currentBet === 5 || this.state.gameStage !== "start" ? "disabled" : ""}
 					>Max Bet</button>
-					<button onClick={() => this.handleDealDraw()}
+					<button onClick={this.handleDealDraw}
 							disabled={this.state.currentBet > 0 ? "" : "disabled"}
 							className="deal-draw"
 					>Deal Draw</button>
